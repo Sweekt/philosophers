@@ -14,7 +14,7 @@ HEAD		:=	includes/philosophers.h
 
 HEAD_D		:=	.
 
-CFLAGS		:=	-Wall -Wextra -Werror -g3
+CFLAGS		:=	-Wall -Wextra -Werror -g3 -pthread
 
 NAME		:=	philosophers
 
@@ -25,14 +25,11 @@ NAME		:=	philosophers
 all			:
 				$(MAKE) $(NAME)
 
-lib			:
-				$(MAKE) -C $(LIB_D)
-
 $(NAME)		:	$(OBJS_D) $(OBJS) $(HEAD)
-				$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_A)
+				$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 $(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD)
-				$(CC) $(CFLAGS) -I/usr/include -Isuper_libft -c $< -o $@
+				$(CC) $(CFLAGS) -I/usr/include -c $< -o $@
 
 $(OBJS_D)	:
 				@mkdir -p $(OBJS_D)
