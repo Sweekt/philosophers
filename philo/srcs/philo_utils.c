@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 13:58:57 by beroy             #+#    #+#             */
-/*   Updated: 2024/02/21 08:53:37 by beroy            ###   ########.fr       */
+/*   Created: 2024/02/21 08:48:50 by beroy             #+#    #+#             */
+/*   Updated: 2024/02/21 08:48:50 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int	main(int ac, char **av)
+void	ft_display(t_params *params)
 {
-	t_params	params;
-
-	if (ac < 5 || ac > 6)
-		return (printf("Wrong arguments input!\n"), 0);
-	if (ft_parse(ac, av, &params) == 1)
-		return (printf("Wrong arguments input!\n"), 0);
-	ft_display(&params);
-	return (0);
+	printf("Number of philosophers: %d\n", params->nbr_phil);
+	printf("Time to die: %d\n", params->ttd);
+	printf("Time to eat: %d\n", params->tte);
+	printf("Time to sleep: %d\n", params->tts);
+	printf("Number of time to eat: %d\n", params->nbr_eat);
 }
