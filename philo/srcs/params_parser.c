@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 08:31:00 by beroy             #+#    #+#             */
-/*   Updated: 2024/02/21 09:06:22 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/13 15:49:28 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,38 +41,17 @@ int ft_is_num(char *str)
 	return (1);
 }
 
-int	ft_check_params(char **av)
+int ft_check_args(char **av)
 {
-	int i;
-
-	i = 1;
-	while (av[i])
-	{
-		if (ft_is_num(av[i]) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int ft_check_value(t_params *params)
-{
-	if (params->nbr_phil == 0)
-		return (printf("There should be at least one philosopher at the table!\n"), 1);
-	return (0);
-}
-
-int	ft_parse(int ac, char **av, t_params *params)
-{
-	if (ft_check_params(av) == 1)
-		return (1);
-	params->nbr_phil = ft_atoi(av[1]);
-	params->ttd = ft_atoi(av[2]);
-	params->tte = ft_atoi(av[3]);
-	params->tts = ft_atoi(av[4]);
-	if (ac == 6)
-		params->nbr_eat = ft_atoi(av[5]);
-	if (ft_check_value(params) == 1)
-		return (1);
+	if (ft_is_num(av[1]) == 0 || ft_atoi(av[1]) < 1 || ft_atoi(av[1]) > PHILO_MAX)
+		return (printf("Wrong number of Philosophers at the table!\n"), 1);
+	if (ft_is_num(av[2]) == 0 || ft_atoi(av[2]) < 1)
+		return (printf("Invalid time to die!\n"), 1);
+	if (ft_is_num(av[3]) == 0 || ft_atoi(av[3]) < 1)
+		return (printf("Invalid time to eat!\n"), 1);
+	if (ft_is_num(av[4]) == 0 || ft_atoi(av[4]) < 1)
+		return (printf("Invalid time to sleep!\n"), 1);
+	if (av[5] && (ft_is_num(av[5]) == 0 || ft_atoi(av[5]) < 1))
+		return (printf("Invalid number of time each philosophers must eat!\n"), 1);
 	return (0);
 }

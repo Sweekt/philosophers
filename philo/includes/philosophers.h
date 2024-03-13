@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/02/21 09:13:09 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/13 15:25:56 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,32 @@
 # include <stdio.h>
 # include <pthread.h>
 
-typedef struct s_params
+# define PHILO_MAX 200
+
+typedef struct s_philo
 {
+	pthread_t		thread;
+	int				id;
+	int				meals_eaten;
 	unsigned int	nbr_phil;
 	unsigned int	ttd;
 	unsigned int	tte;
 	unsigned int	tts;
-	unsigned int	nbr_eat;
-}	t_params;
+	int				nbr_eat;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*write_lock;
+}	t_philo;
 
 // params_parser
 
-int	ft_parse(int ac, char **av, t_params *params);
-int	ft_check_params(char **av);
 int ft_is_num(char *str);
 int ft_atoi(char *str);
-int ft_check_value(t_params *params);
+int ft_check_args(char **av);
 
 // philo_utils
 
-void	ft_display(t_params *params);
+// init
+
 
 #endif
