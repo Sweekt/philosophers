@@ -6,18 +6,50 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/13 15:18:31 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/18 15:01:18 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	philo_init(int ac, char **av)
+#include "../includes/philosophers.h"
+
+void	content_init(t_philo *philo, int ac, char **av, int i)
 {
-	params->nbr_phil = ft_atoi(av[1]);
-	params->ttd = ft_atoi(av[2]);
-	params->tte = ft_atoi(av[3]);
-	params->tts = ft_atoi(av[4]);
+	philo->id = i;
+	philo->meals_eaten = 0;
+	philo->nbr_phil = ft_atoi(av[1]);
+	philo->ttd = ft_atoi(av[2]);
+	philo->tte = ft_atoi(av[3]);
+	philo->tts = ft_atoi(av[4]);
 	if (ac == 6)
-		params->nbr_eat = ft_atoi(av[5]);
+		philo->nbr_eat = ft_atoi(av[5]);
 	else
-		params->nbr_eat = -1;
+		philo->nbr_eat = -1;
+}
+
+t_philo	*philo_init(int ac, char **av)
+{
+	int				i;
+	t_philo			*philo;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t write_lock;
+
+	i = 0;
+	philo = malloc(sizeof(t_philo) * ft_atoi(av[1]));
+	if (philo == NULL)
+		return (NULL);
+	forks = malloc(sizeof(pthread_mutex_t) * ft_atoi(av[1]));
+	if (forks == NULL)
+		return (free(philo), NULL);
+	while (i < ft_atoi(av[1]))
+	{
+		content_init(&philo[i], ac, av, i);
+		philo[i].write_lock = &write_lock;
+		philo[i].r_fork = &forks[i];
+		if (i != ft_atoi(av[1]) - 1)
+			philo[i].l_fork = &forks[i + 1];
+		else
+			philo[i].l_fork = &forks[0];
+		i++;
+	}
+	return (philo);
 }

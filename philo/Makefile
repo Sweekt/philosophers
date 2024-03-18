@@ -4,7 +4,8 @@
 
 SRCS		:=	main.c			\
 				params_parser.c	\
-				philo_utils.c
+				philo_utils.c	\
+				init.c
 
 SRCS_D		:=	srcs/
 

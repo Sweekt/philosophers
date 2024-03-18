@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/13 15:25:56 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/18 15:01:59 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <pthread.h>
+# include <stdlib.h>
 
 # define PHILO_MAX 200
 
@@ -33,6 +34,10 @@ typedef struct s_philo
 	pthread_mutex_t	*write_lock;
 }	t_philo;
 
+// main
+
+void	ft_display(t_philo *philo);
+
 // params_parser
 
 int ft_is_num(char *str);
@@ -43,5 +48,7 @@ int ft_check_args(char **av);
 
 // init
 
+void	content_init(t_philo *philo, int ac, char **av, int i);
+t_philo	*philo_init(int ac, char **av);
 
 #endif
