@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:57 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/18 15:11:06 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/18 17:13:27 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	ft_display(t_philo *philo)
 
 int	main(int ac, char **av)
 {
-	t_philo	*philo;
+	t_philo			*philo;
+	unsigned int	i;
 
 	if (ac < 5 || ac > 6)
 		return (printf("Wrong arguments input!\n"), 0);
@@ -36,5 +37,13 @@ int	main(int ac, char **av)
 	if (philo == NULL)
 		return (printf("Malloc failed!\n"), 0);
 	ft_display(philo);
+	i = 0;
+	while (i < philo[0].nbr_phil)
+	{
+		pthread_create(&philo[i].thread, NULL, routine, &philo[i]);
+		i++;
+	}
+	while (ALIVE)
+		;
 	return (0);
 }

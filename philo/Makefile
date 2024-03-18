@@ -4,8 +4,9 @@
 
 SRCS		:=	main.c			\
 				params_parser.c	\
-				philo_utils.c	\
-				init.c
+				time.c			\
+				init.c			\
+				routine.c
 
 SRCS_D		:=	srcs/
 

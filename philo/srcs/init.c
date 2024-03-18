@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/18 15:01:18 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/18 17:30:50 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	content_init(t_philo *philo, int ac, char **av, int i)
 		philo->nbr_eat = ft_atoi(av[5]);
 	else
 		philo->nbr_eat = -1;
+	philo->alive = ALIVE;
+	philo->last_meal = 0;
 }
 
 t_philo	*philo_init(int ac, char **av)
@@ -42,6 +44,7 @@ t_philo	*philo_init(int ac, char **av)
 		return (free(philo), NULL);
 	while (i < ft_atoi(av[1]))
 	{
+		pthread_mutex_init(&forks[i], NULL);
 		content_init(&philo[i], ac, av, i);
 		philo[i].write_lock = &write_lock;
 		philo[i].r_fork = &forks[i];
