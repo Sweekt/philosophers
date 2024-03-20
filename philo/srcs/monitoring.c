@@ -6,11 +6,20 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/19 14:55:25 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/20 13:11:07 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
+void	ft_write(t_philo *philo, char *str, char *color)
+{
+	pthread_mutex_lock(philo->write_lock);
+	printf("%s", color);
+	printf("Philosopher %d %s\n", philo->id, str);
+	printf("\033[0m");
+	pthread_mutex_unlock(philo->write_lock);
+}
 
 int check_status(t_philo *philo)
 {
@@ -20,7 +29,10 @@ int check_status(t_philo *philo)
 	while (i < philo[0].nbr_phil)
 	{
 		if (philo[i].alive == DEAD)
-			return (printf("Philosopher %d died from a lack of spaghetti... :(\n", philo[i].id), DEAD);
+		{
+			ft_write(&philo[i], DIED, RED);
+			return (DEAD);
+		}
 		i++;
 	}
 	return (ALIVE);

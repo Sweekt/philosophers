@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:40:46 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/18 17:23:44 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/20 13:41:04 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->r_fork);
+	ft_write(philo, RFORK, BLUE);
 	pthread_mutex_lock(philo->l_fork);
-	pthread_mutex_lock(philo->write_lock);
-	printf("%li: Philo %d is eating...\n", time_now(), philo->id);
-	pthread_mutex_unlock(philo->write_lock);
+	ft_write(philo, LFORK, CYAN);
+	ft_write(philo, EAT, GREEN);
 	philo->last_meal = time_now();
 	philo->meals_eaten++;
 	ft_usleep(philo->tte);
@@ -28,13 +28,10 @@ void	eat(t_philo *philo)
 
 void	sleep_think(t_philo *philo)
 {
-	pthread_mutex_lock(philo->write_lock);
-	printf("Philo %d is sleeping...\n", philo->id);
-	pthread_mutex_unlock(philo->write_lock);
+	ft_write(philo, SLEEP, PURPLE);
 	ft_usleep(philo->tts);
-	pthread_mutex_lock(philo->write_lock);
-	printf("Philo %d is thinking...\n", philo->id);
-	pthread_mutex_unlock(philo->write_lock);
+	ft_write(philo, THINK, YELLOW);
+	ft_usleep(500);
 }
 
 void	*routine(void *data)
@@ -43,6 +40,11 @@ void	*routine(void *data)
 
 	philo = (t_philo *)data;
 	philo->last_meal = time_now();
+	if ((philo->id - 1) % 2 == 1)
+	{
+		ft_write(philo, THINK, PURPLE);
+		ft_usleep(500);
+	}
 	while (philo->alive == ALIVE)
 	{
 		eat(philo);

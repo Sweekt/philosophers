@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/18 17:30:50 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/20 13:01:27 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	content_init(t_philo *philo, int ac, char **av, int i)
 {
-	philo->id = i;
+	philo->id = i + 1;
 	philo->meals_eaten = 0;
 	philo->nbr_phil = ft_atoi(av[1]);
 	philo->ttd = ft_atoi(av[2]);

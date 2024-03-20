@@ -37,7 +37,6 @@ int	main(int ac, char **av)
 	philo = philo_init(ac, av);
 	if (philo == NULL)
 		return (printf("Malloc failed!\n"), 0);
-	//ft_display(philo);
 	i = 0;
 	while (i < philo[0].nbr_phil)
 	{
