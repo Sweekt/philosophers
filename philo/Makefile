@@ -6,7 +6,8 @@ SRCS		:=	main.c			\
 				params_parser.c	\
 				time.c			\
 				init.c			\
-				routine.c
+				routine.c		\
+				monitoring.c
 
 SRCS_D		:=	srcs/
 

@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/18 16:59:01 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/19 14:47:42 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # define PHILO_MAX 200
 # define ALIVE 1
+# define DEAD 0
 
 typedef struct s_philo
 {
@@ -64,5 +65,10 @@ t_philo		*philo_init(int ac, char **av);
 
 long int	time_now(void);
 void		ft_usleep(long int time);
+
+// monitoring
+
+int 		check_status(t_philo *philo);
+void		*monitoring(void *data);
 
 #endif
