@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/20 13:01:27 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/20 16:39:09 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ t_philo	*philo_init(int ac, char **av)
 	int				i;
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t write_lock;
+	pthread_mutex_t *write_lock;
+	pthread_mutex_t *start_lock;
 
 	i = 0;
 	philo = malloc(sizeof(t_philo) * ft_atoi(av[1]));
@@ -42,11 +43,16 @@ t_philo	*philo_init(int ac, char **av)
 	forks = malloc(sizeof(pthread_mutex_t) * ft_atoi(av[1]));
 	if (forks == NULL)
 		return (free(philo), NULL);
+	write_lock = malloc(sizeof(pthread_mutex_t));
+	start_lock = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(write_lock, NULL);
+	pthread_mutex_init(start_lock, NULL);
 	while (i < ft_atoi(av[1]))
 	{
 		pthread_mutex_init(&forks[i], NULL);
 		content_init(&philo[i], ac, av, i);
-		philo[i].write_lock = &write_lock;
+		philo[i].write_lock = write_lock;
+		philo[i].start_lock = start_lock;
 		philo[i].r_fork = &forks[i];
 		if (i != ft_atoi(av[1]) - 1)
 			philo[i].l_fork = &forks[i + 1];

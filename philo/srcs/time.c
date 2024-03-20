@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 16:34:36 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/18 16:49:02 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/20 14:00:53 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ void	ft_usleep(long int time)
 	long int	start_time;
 
 	start_time = time_now();
-	while ((time_now() - start_time) < time)
+	while ((time_now() - start_time) < time / 1000)
 		usleep(150);
 }

@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:57 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/19 15:10:29 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/20 14:10:32 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ int	main(int ac, char **av)
 	if (philo == NULL)
 		return (printf("Malloc failed!\n"), 0);
 	i = 0;
+	pthread_mutex_lock(philo[0].start_lock);
 	while (i < philo[0].nbr_phil)
 	{
 		pthread_create(&philo[i].thread, NULL, routine, &philo[i]);
 		i++;
 	}
+	pthread_mutex_unlock(philo[0].start_lock);
 	pthread_create(&monitor, NULL, monitoring, philo);
 	while (ALIVE)
 		;
