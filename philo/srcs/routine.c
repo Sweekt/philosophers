@@ -21,7 +21,7 @@ void	eat(t_philo *philo)
 	ft_write(philo, EAT, GREEN);
 	philo->last_meal = time_now();
 	philo->meals_eaten++;
-	ft_usleep(philo->tte * 1000);
+	ft_usleep(philo->tte);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
 }
@@ -29,7 +29,7 @@ void	eat(t_philo *philo)
 void	sleep_think(t_philo *philo)
 {
 	ft_write(philo, SLEEP, PURPLE);
-	ft_usleep(philo->tts * 1000);
+	ft_usleep(philo->tts);
 	ft_write(philo, THINK, YELLOW);
 	ft_usleep(500);
 }
