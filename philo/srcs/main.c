@@ -44,8 +44,8 @@ int	main(int ac, char **av)
 		pthread_create(&table->philo[i].thread, NULL, routine, &table->philo[i]);
 		i++;
 	}
-	pthread_mutex_unlock(&table->start_lock);
 	pthread_create(&monitor, NULL, monitoring, table);
+	pthread_mutex_unlock(&table->start_lock);
 	while (ALIVE)
 		;
 	return (0);

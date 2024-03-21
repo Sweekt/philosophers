@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/20 16:39:09 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 15:51:52 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	content_init(t_philo *philo, int ac, char **av, int i)
 	else
 		philo->nbr_eat = -1;
 	philo->alive = ALIVE;
-	philo->last_meal = 0;
+	philo->last_meal = time_now();
 }
 
 t_table	*init(int ac, char **av)

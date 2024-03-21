@@ -6,7 +6,7 @@
 /*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 15:58:45 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 16:12:30 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 void	ft_write(t_philo *philo, char *str, char *color)
 {
 	pthread_mutex_lock(philo->write_lock);
-	printf("%li: ", time_now());
-	printf("%s", color);
-	printf("Philosopher %d %s\n", philo->id, str);
-	printf("\033[0m");
+	printf("%li: %sPhilosopher %d %s\n\033[0m", time_now(), color, philo->id, str);
 	pthread_mutex_unlock(philo->write_lock);
 }
 
@@ -45,6 +42,8 @@ void	*monitoring(void *data)
 	unsigned int	i;
 
 	table = (t_table *)data;
+	pthread_mutex_lock(&table->start_lock);
+	pthread_mutex_unlock(&table->start_lock);
 	i = 0;
 	while (check_status(table->philo) == ALIVE)
 	{
