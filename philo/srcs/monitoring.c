@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/20 14:01:06 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 15:58:45 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void	*monitoring(void *data)
 	i = 0;
 	while (check_status(table->philo) == ALIVE)
 	{
-		if (table->philo[i].last_meal >= table->philo[i].ttd)
+		pthread_mutex_lock(&table->meal_lock);
+		if (time_now() - table->philo[i].last_meal >= table->philo[i].ttd)
 			table->philo[i].alive = DEAD;
+		pthread_mutex_unlock(&table->meal_lock);
 		ft_usleep(500);
 		i++;
 		if (i == table->philo[0].nbr_phil)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:40:46 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/20 14:17:34 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 15:58:12 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	eat(t_philo *philo)
 	pthread_mutex_lock(philo->l_fork);
 	ft_write(philo, LFORK, CYAN);
 	ft_write(philo, EAT, GREEN);
+	pthread_mutex_lock(philo->meal_lock);
 	philo->last_meal = time_now();
+	pthread_mutex_unlock(philo->meal_lock);
 	philo->meals_eaten++;
 	ft_usleep(philo->tte);
 	pthread_mutex_unlock(philo->l_fork);
@@ -41,7 +43,9 @@ void	*routine(void *data)
 	philo = (t_philo *)data;
 	pthread_mutex_lock(philo->start_lock);
 	pthread_mutex_unlock(philo->start_lock);
+	pthread_mutex_lock(philo->meal_lock);
 	philo->last_meal = time_now();
+	pthread_mutex_unlock(philo->meal_lock);
 	if ((philo->id - 1) % 2 == 1)
 	{
 		ft_write(philo, THINK, PURPLE);

@@ -38,6 +38,7 @@ t_table	*table_init(t_philo *philo, int nbr_phil)
 		return (NULL);
 	pthread_mutex_init(&table->write_lock, NULL);
 	pthread_mutex_init(&table->start_lock, NULL);
+	pthread_mutex_init(&table->meal_lock, NULL);
 	table->forks = fork_init(nbr_phil);
 	if (table->forks == NULL)
 		return (free(table), NULL);
@@ -79,6 +80,7 @@ t_table	*init(int ac, char **av)
 		content_init(&philo[i], ac, av, i);
 		philo[i].write_lock = &table->write_lock;
 		philo[i].start_lock = &table->start_lock;
+		philo[i].meal_lock = &table->meal_lock;
 		philo[i].r_fork = &table->forks[i];
 		if (i != ft_atoi(av[1]) - 1)
 			philo[i].l_fork = &table->forks[i + 1];

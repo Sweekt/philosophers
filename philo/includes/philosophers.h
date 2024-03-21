@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/20 13:27:57 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 15:51:52 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ typedef struct s_philo
 	int				id;
 	int				meals_eaten;
 	unsigned int	nbr_phil;
-	unsigned int	ttd;
-	unsigned int	tte;
-	unsigned int	tts;
+	long int		ttd;
+	long int		tte;
+	long int		tts;
 	unsigned int	nbr_eat;
 	unsigned int 	alive;
 	long int		last_meal;
@@ -57,6 +57,7 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*write_lock;
 	pthread_mutex_t	*start_lock;
+	pthread_mutex_t *meal_lock;
 }	t_philo;
 
 typedef struct s_table
@@ -64,6 +65,7 @@ typedef struct s_table
 	pthread_mutex_t *forks;
 	pthread_mutex_t write_lock;
 	pthread_mutex_t start_lock;
+	pthread_mutex_t meal_lock;
 	t_philo	*philo;
 }	t_table;
 
