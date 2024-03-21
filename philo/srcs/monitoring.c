@@ -6,7 +6,7 @@
 /*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 16:50:49 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 16:59:27 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,5 @@ void	*monitoring(void *data)
 		if (i == table->philo[0].nbr_phil)
 			i = 0;
 	}
-	/*i = 0;
-	while (i++ < table->philo->nbr_phil)
-		pthread_join(table->philo[i].thread, NULL);*/
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 16:35:43 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 16:41:29 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,6 @@ typedef struct s_table
 	unsigned int	status;
 	t_philo	*philo;
 }	t_table;
-
-// main
-
-void			ft_display(t_philo *philo);
 
 // params_parser
 

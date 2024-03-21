@@ -6,22 +6,21 @@
 /*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:57 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 16:12:30 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 17:09:04 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	ft_display(t_philo *philo)
+int join_n_free(t_table *table, pthread_t monitor, unsigned int i)
 {
-	unsigned int i;
-
-	i = 0;
-	while (i < philo[i].nbr_phil)
-	{
-		printf("ID= %d\n", philo[i].id);
-		i++;
-	}
+	pthread_join(monitor, NULL);
+	while (i-- > 0)
+		pthread_join(table->philo[i].thread, NULL);
+	free(table->forks);
+	free(table->philo);
+	free(table);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -48,5 +47,5 @@ int	main(int ac, char **av)
 	pthread_mutex_unlock(&table->start_lock);
 	while (table->status == ALIVE)
 		;
-	return (0);
+	return (join_n_free(table, monitor, i));
 }
