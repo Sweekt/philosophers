@@ -6,7 +6,7 @@
 /*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:40:46 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 16:10:06 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 16:52:48 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	*routine(void *data)
 		ft_write(philo, THINK, PURPLE, 0);
 		ft_usleep(500);
 	}
-	while (philo->alive == ALIVE)
+	while (*philo->status == ALIVE)
 	{
 		eat(philo);
 		sleep_think(philo);

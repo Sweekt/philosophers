@@ -6,7 +6,7 @@
 /*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:57 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 13:53:36 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 16:12:30 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 	}
 	pthread_create(&monitor, NULL, monitoring, table);
 	pthread_mutex_unlock(&table->start_lock);
-	while (ALIVE)
+	while (table->status == ALIVE)
 		;
 	return (0);
 }
