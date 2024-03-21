@@ -59,36 +59,46 @@ typedef struct s_philo
 	pthread_mutex_t	*start_lock;
 }	t_philo;
 
+typedef struct s_table
+{
+	pthread_mutex_t *forks;
+	pthread_mutex_t write_lock;
+	pthread_mutex_t start_lock;
+	t_philo	*philo;
+}	t_table;
+
 // main
 
-void		ft_display(t_philo *philo);
+void			ft_display(t_philo *philo);
 
 // params_parser
 
-int			ft_is_num(char *str);
-int			ft_atoi(char *str);
-int			ft_check_args(char **av);
+int				ft_is_num(char *str);
+int				ft_atoi(char *str);
+int				ft_check_args(char **av);
 
 // routine
 
-void		eat(t_philo *philo);
-void		sleep_think(t_philo *philo);
-void		*routine(void *data);
+void			eat(t_philo *philo);
+void			sleep_think(t_philo *philo);
+void			*routine(void *data);
 
 // init
 
-void		content_init(t_philo *philo, int ac, char **av, int i);
-t_philo		*philo_init(int ac, char **av);
+pthread_mutex_t	*fork_init(int nbr_phil);
+t_table			*table_init(t_philo *philo, int nbr_phil);
+void			content_init(t_philo *philo, int ac, char **av, int i);
+t_table			*init(int ac, char **av);
 
 // time
 
-long int	time_now(void);
-void		ft_usleep(long int time);
+long int		time_now(void);
+void			ft_usleep(long int time);
 
 // monitoring
 
-void		ft_write(t_philo *philo, char *str, char *color);
-int 		check_status(t_philo *philo);
-void		*monitoring(void *data);
+void			ft_write(t_philo *philo, char *str, char *color);
+int 			check_status(t_philo *philo);
+void			*monitoring(void *data);
 
 #endif

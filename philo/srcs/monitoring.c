@@ -40,18 +40,18 @@ int check_status(t_philo *philo)
 
 void	*monitoring(void *data)
 {
-	t_philo			*philo;
+	t_table			*table;
 	unsigned int	i;
 
-	philo = (t_philo *)data;
+	table = (t_table *)data;
 	i = 0;
-	while (check_status(philo) == ALIVE)
+	while (check_status(table->philo) == ALIVE)
 	{
-		if (philo[i].last_meal >= philo[i].ttd)
-			philo[i].alive = DEAD;
+		if (table->philo[i].last_meal >= table->philo[i].ttd)
+			table->philo[i].alive = DEAD;
 		ft_usleep(500);
 		i++;
-		if (i == philo[0].nbr_phil)
+		if (i == table->philo[0].nbr_phil)
 			i = 0;
 	}
 	return (NULL);
