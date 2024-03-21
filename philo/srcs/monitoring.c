@@ -15,6 +15,7 @@
 void	ft_write(t_philo *philo, char *str, char *color)
 {
 	pthread_mutex_lock(philo->write_lock);
+	printf("%li: ", time_now());
 	printf("%s", color);
 	printf("Philosopher %d %s\n", philo->id, str);
 	printf("\033[0m");
