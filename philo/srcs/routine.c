@@ -6,7 +6,7 @@
 /*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:40:46 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 16:09:02 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 16:10:06 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->r_fork);
-	ft_write(philo, RFORK, BLUE);
+	ft_write(philo, RFORK, BLUE, 0);
 	pthread_mutex_lock(philo->l_fork);
-	ft_write(philo, LFORK, CYAN);
-	ft_write(philo, EAT, GREEN);
+	ft_write(philo, LFORK, CYAN, 0);
+	ft_write(philo, EAT, GREEN, 0);
 	pthread_mutex_lock(philo->meal_lock);
 	philo->last_meal = time_now();
 	pthread_mutex_unlock(philo->meal_lock);
@@ -30,9 +30,9 @@ void	eat(t_philo *philo)
 
 void	sleep_think(t_philo *philo)
 {
-	ft_write(philo, SLEEP, PURPLE);
+	ft_write(philo, SLEEP, PURPLE, 0);
 	ft_usleep(philo->tts * 1000);
-	ft_write(philo, THINK, YELLOW);
+	ft_write(philo, THINK, YELLOW, 0);
 	ft_usleep(500);
 }
 
@@ -49,7 +49,7 @@ void	*routine(void *data)
 
 	if ((philo->id - 1) % 2 == 1)
 	{
-		ft_write(philo, THINK, PURPLE);
+		ft_write(philo, THINK, PURPLE, 0);
 		ft_usleep(500);
 	}
 	while (philo->alive == ALIVE)

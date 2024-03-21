@@ -6,7 +6,7 @@
 /*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 15:51:52 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 16:35:43 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@
 # define SLEEP "is sleeping..."
 # define THINK "is thinking."
 # define DIED "died from a lack of spaghetti... :("
+# define SATISFIED "and all of his friend are satisfied!"
 
 typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	int				meals_eaten;
+	unsigned int	meals_eaten;
 	unsigned int	nbr_phil;
 	long int		ttd;
 	long int		tte;
@@ -53,6 +54,7 @@ typedef struct s_philo
 	unsigned int	nbr_eat;
 	unsigned int 	alive;
 	long int		last_meal;
+	unsigned int	*status;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*write_lock;
@@ -66,6 +68,7 @@ typedef struct s_table
 	pthread_mutex_t write_lock;
 	pthread_mutex_t start_lock;
 	pthread_mutex_t meal_lock;
+	unsigned int	status;
 	t_philo	*philo;
 }	t_table;
 
@@ -99,7 +102,7 @@ void			ft_usleep(long int time);
 
 // monitoring
 
-void			ft_write(t_philo *philo, char *str, char *color);
+void			ft_write(t_philo *philo, char *str, char *color, int stop);
 int 			check_status(t_philo *philo);
 void			*monitoring(void *data);
 

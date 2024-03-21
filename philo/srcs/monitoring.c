@@ -6,32 +6,46 @@
 /*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 16:12:30 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 16:42:30 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	ft_write(t_philo *philo, char *str, char *color)
+void	ft_write(t_philo *philo, char *str, char *color, int stop)
 {
-	pthread_mutex_lock(philo->write_lock);
-	printf("%li: %sPhilosopher %d %s\n\033[0m", time_now(), color, philo->id, str);
-	pthread_mutex_unlock(philo->write_lock);
+	if (*philo->status == 1)
+	{
+		pthread_mutex_lock(philo->write_lock);
+		printf("%li: %sPhilosopher %d %s\033[0m\n", time_now(), color, philo->id, str);
+		if (stop == 1)
+			*philo->status = 0;
+		pthread_mutex_unlock(philo->write_lock);
+	}
 }
 
 int check_status(t_philo *philo)
 {
 	unsigned int	i;
+	unsigned int	satisfied;
 
 	i = 0;
-	while (i < philo[0].nbr_phil)
+	satisfied = 0;
+	while (i < philo->nbr_phil)
 	{
 		if (philo[i].alive == DEAD)
 		{
-			ft_write(&philo[i], DIED, RED);
+			ft_write(&philo[i], DIED, RED, 1);
 			return (DEAD);
 		}
+		if (philo[i].meals_eaten >= philo[i].nbr_eat)
+			satisfied++;
 		i++;
+	}
+	if (satisfied == philo->nbr_phil)
+	{
+		ft_write(&philo[i], SATISFIED, RED, 1);
+		return (DEAD);
 	}
 	return (ALIVE);
 }

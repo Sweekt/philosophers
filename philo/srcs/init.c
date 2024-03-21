@@ -6,7 +6,7 @@
 /*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 15:51:52 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 16:19:58 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_table	*table_init(t_philo *philo, int nbr_phil)
 	if (table->forks == NULL)
 		return (free(table), NULL);
 	table->philo = philo;
+	table->status = 1;
 	return (table);
 }
 
@@ -82,6 +83,7 @@ t_table	*init(int ac, char **av)
 		philo[i].start_lock = &table->start_lock;
 		philo[i].meal_lock = &table->meal_lock;
 		philo[i].r_fork = &table->forks[i];
+		philo[i].status = &table->status;
 		if (i != ft_atoi(av[1]) - 1)
 			philo[i].l_fork = &table->forks[i + 1];
 		else
