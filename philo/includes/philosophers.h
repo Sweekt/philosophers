@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 16:41:29 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/01 17:10:32 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	unsigned int	meals_eaten;
+	int				meals_eaten;
 	unsigned int	nbr_phil;
 	long int		ttd;
 	long int		tte;
 	long int		tts;
-	unsigned int	nbr_eat;
+	int				nbr_eat;
 	unsigned int 	alive;
 	long int		last_meal;
 	unsigned int	*status;

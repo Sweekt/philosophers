@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:57 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 17:09:04 by beroy            ###   ########.fr       */
+/*   Updated: 2024/03/21 21:02:28 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,5 @@ int	main(int ac, char **av)
 	}
 	pthread_create(&monitor, NULL, monitoring, table);
 	pthread_mutex_unlock(&table->start_lock);
-	while (table->status == ALIVE)
-		;
 	return (join_n_free(table, monitor, i));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 16:59:27 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/08 15:44:53 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	ft_write(t_philo *philo, char *str, char *color, int stop)
 {
+	pthread_mutex_lock(philo->write_lock);
 	if (*philo->status == 1)
 	{
-		pthread_mutex_lock(philo->write_lock);
 		printf("%li: %sPhilosopher %d %s\033[0m\n", time_now(), color, philo->id, str);
 		if (stop == 1)
 			*philo->status = 0;
-		pthread_mutex_unlock(philo->write_lock);
 	}
+	pthread_mutex_unlock(philo->write_lock);
 }
 
 int check_status(t_philo *philo)
@@ -38,7 +38,7 @@ int check_status(t_philo *philo)
 			ft_write(&philo[i], DIED, RED, 1);
 			return (DEAD);
 		}
-		if (philo[i].meals_eaten >= philo[i].nbr_eat)
+		if (philo[i].nbr_eat != -1 && philo[i].meals_eaten >= philo[i].nbr_eat)
 			satisfied++;
 		i++;
 	}

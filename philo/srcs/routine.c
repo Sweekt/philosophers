@@ -46,7 +46,6 @@ void	*routine(void *data)
 	pthread_mutex_unlock(philo->meal_lock);
 	pthread_mutex_lock(philo->start_lock);
 	pthread_mutex_unlock(philo->start_lock);
-
 	if ((philo->id - 1) % 2 == 1)
 	{
 		ft_write(philo, THINK, PURPLE, 0);
