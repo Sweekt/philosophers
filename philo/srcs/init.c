@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 16:19:58 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:11:38 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,31 @@ pthread_mutex_t 	*fork_init(int nbr_phil)
 	pthread_mutex_t *forks;
 	int 			i;
 
-	i = 0;
+	i = -1;
 	forks = malloc(sizeof(pthread_mutex_t) * nbr_phil);
 	if (forks == NULL)
 		return (NULL);
 	while (i < nbr_phil)
 	{
-		pthread_mutex_init(&forks[i], NULL);
+		if (pthread_mutex_init(&forks[i], NULL))
+		{
+			while (i-- > 0)
+				pthread_mutex_destroy(&forks[i]);
+			return (free(forks), NULL);
+		}
 		i++;
 	}
 	return (forks);
+}
+
+void	mutex_destroyer(t_table *table, int state)
+{
+	if (state < 2)
+		pthread_mutex_destroy(&table->meal_lock);
+	if (state < 1)
+		pthread_mutex_destroy(&table->start_lock);
+	if (state < 0)
+		pthread_mutex_destroy(&table->write_lock);
 }
 
 t_table	*table_init(t_philo *philo, int nbr_phil)
@@ -36,12 +51,15 @@ t_table	*table_init(t_philo *philo, int nbr_phil)
 	table = malloc(sizeof(t_table));
 	if (table == NULL)
 		return (NULL);
-	pthread_mutex_init(&table->write_lock, NULL);
-	pthread_mutex_init(&table->start_lock, NULL);
-	pthread_mutex_init(&table->meal_lock, NULL);
+	if (pthread_mutex_init(&table->write_lock, NULL))
+		return (NULL);
+	if (pthread_mutex_init(&table->start_lock, NULL))
+		return (mutex_destroyer(table, 1), NULL);
+	if (pthread_mutex_init(&table->meal_lock, NULL))
+		return (mutex_destroyer(table, 2), NULL);
 	table->forks = fork_init(nbr_phil);
 	if (table->forks == NULL)
-		return (free(table), NULL);
+		return (mutex_destroyer(table, 3), free(table), NULL);
 	table->philo = philo;
 	table->status = 1;
 	return (table);
