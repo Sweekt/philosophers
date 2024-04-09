@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/09 14:11:38 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:14:07 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	content_init(t_philo *philo, int ac, char **av, int i)
 		philo->nbr_eat = -1;
 	philo->alive = ALIVE;
 	philo->last_meal = time_now();
+	philo->satisfied = 0;
 }
 
 t_table	*init(int ac, char **av)

@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/01 17:10:32 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:20:32 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_philo
 	long int		tte;
 	long int		tts;
 	int				nbr_eat;
+	int 			satisfied;
 	unsigned int 	alive;
 	long int		last_meal;
 	unsigned int	*status;
@@ -87,6 +88,7 @@ void			*routine(void *data);
 // init
 
 pthread_mutex_t	*fork_init(int nbr_phil);
+void			mutex_destroyer(t_table *table, int state);
 t_table			*table_init(t_philo *philo, int nbr_phil);
 void			content_init(t_philo *philo, int ac, char **av, int i);
 t_table			*init(int ac, char **av);

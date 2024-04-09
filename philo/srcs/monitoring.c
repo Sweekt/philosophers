@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/08 15:44:53 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:46:41 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int check_status(t_philo *philo)
 			ft_write(&philo[i], DIED, RED, 1);
 			return (DEAD);
 		}
-		if (philo[i].nbr_eat != -1 && philo[i].meals_eaten >= philo[i].nbr_eat)
+		if (philo[i].satisfied == 1)
 			satisfied++;
 		i++;
 	}
@@ -64,6 +64,8 @@ void	*monitoring(void *data)
 		pthread_mutex_lock(&table->meal_lock);
 		if (time_now() - table->philo[i].last_meal >= table->philo[i].ttd)
 			table->philo[i].alive = DEAD;
+		if (table->philo[i].nbr_eat != -1 && table->philo[i].meals_eaten >= table->philo[i].nbr_eat)
+			table->philo[i].satisfied = 1;
 		pthread_mutex_unlock(&table->meal_lock);
 		ft_usleep(500);
 		i++;

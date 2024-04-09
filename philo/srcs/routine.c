@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:40:46 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 16:52:48 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/09 14:35:20 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	eat(t_philo *philo)
 	ft_write(philo, EAT, GREEN, 0);
 	pthread_mutex_lock(philo->meal_lock);
 	philo->last_meal = time_now();
-	pthread_mutex_unlock(philo->meal_lock);
 	philo->meals_eaten++;
+	pthread_mutex_unlock(philo->meal_lock);
 	ft_usleep(philo->tte * 1000);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);

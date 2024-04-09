@@ -35,7 +35,7 @@ int	main(int ac, char **av)
 		return (0);
 	table = init(ac, av);
 	if (table == NULL)
-		return (printf("Malloc failed!\n"), 0);
+		return (printf("Malloc or mutex failed!\n"), 0);
 	i = 0;
 	pthread_mutex_lock(&table->start_lock);
 	while (i < table->philo[0].nbr_phil)
