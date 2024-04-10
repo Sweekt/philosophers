@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:40:46 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/10 15:58:33 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/10 17:18:26 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ void	sleep_think(t_philo *philo)
 	ft_write(philo, THINK, YELLOW, 0);
 	ft_usleep(500);
 }
-int ft_status(t_philo *philo)
+
+int	ft_status(t_philo *philo)
 {
-	int state;
+	int	state;
 
 	pthread_mutex_lock(philo->dead_lock);
 	if (*philo->status == DEAD)
@@ -47,6 +48,7 @@ int ft_status(t_philo *philo)
 	pthread_mutex_unlock(philo->dead_lock);
 	return (state);
 }
+
 void	*routine(void *data)
 {
 	t_philo	*philo;

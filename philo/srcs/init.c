@@ -6,16 +6,16 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/10 15:01:37 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/10 17:06:39 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-pthread_mutex_t 	*fork_init(int nbr_phil)
+pthread_mutex_t	*fork_init(int nbr_phil)
 {
-	pthread_mutex_t *forks;
-	int 			i;
+	pthread_mutex_t	*forks;
+	int				i;
 
 	i = 0;
 	forks = malloc(sizeof(pthread_mutex_t) * nbr_phil);
@@ -48,7 +48,7 @@ void	mutex_destroyer(t_table *table, int state, int i)
 
 t_table	*table_init(t_philo *philo, int nbr_phil)
 {
-	t_table *table;
+	t_table	*table;
 
 	table = malloc(sizeof(t_table));
 	if (table == NULL)
@@ -67,7 +67,7 @@ t_table	*table_init(t_philo *philo, int nbr_phil)
 	return (table);
 }
 
-void	content_init(t_philo *philo, int ac, char **av, int i)
+void	content_init(t_philo *philo, t_table *table, char **av, int i)
 {
 	philo->id = i + 1;
 	philo->meals_eaten = 0;
@@ -75,7 +75,7 @@ void	content_init(t_philo *philo, int ac, char **av, int i)
 	philo->ttd = ft_atoi(av[2]);
 	philo->tte = ft_atoi(av[3]);
 	philo->tts = ft_atoi(av[4]);
-	if (ac == 6)
+	if (av[5])
 		philo->nbr_eat = ft_atoi(av[5]);
 	else
 		philo->nbr_eat = -1;
@@ -83,9 +83,12 @@ void	content_init(t_philo *philo, int ac, char **av, int i)
 	philo->last_meal = time_now();
 	philo->satisfied = 0;
 	philo->initial_time = time_now();
+	philo->write_lock = &table->write_lock;
+	philo->start_lock = &table->start_lock;
+	philo->dead_lock = &table->dead_lock;
 }
 
-t_table	*init(int ac, char **av)
+t_table	*init(char **av)
 {
 	int		i;
 	t_philo	*philo;
@@ -100,10 +103,7 @@ t_table	*init(int ac, char **av)
 		return (free(philo), NULL);
 	while (i < ft_atoi(av[1]))
 	{
-		content_init(&philo[i], ac, av, i);
-		philo[i].write_lock = &table->write_lock;
-		philo[i].start_lock = &table->start_lock;
-		philo[i].dead_lock = &table->dead_lock;
+		content_init(&philo[i], table, av, i);
 		if (pthread_mutex_init(&philo[i].meal_lock, NULL))
 			return (mutex_destroyer(table, 3, i), NULL);
 		philo[i].r_fork = &table->forks[i];
