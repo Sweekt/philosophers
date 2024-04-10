@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/10 11:15:18 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/10 14:22:51 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_write(t_philo *philo, char *str, char *color, int stop)
 	pthread_mutex_lock(philo->write_lock);
 	if (*philo->status == 1)
 	{
-		printf("%li: %sPhilosopher %d %s\033[0m\n", time_now(), color, philo->id, str);
+		printf("%li%s %d %s\033[0m\n", time_now() - philo->initial_time, color, philo->id, str);
 		if (stop == 1)
 			*philo->status = 0;
 	}
@@ -42,10 +42,9 @@ int check_status(t_philo *philo)
 			satisfied++;
 		i++;
 	}
-	//printf("nbr of satisfied: %d\n", satisfied);
 	if (satisfied == philo[0].nbr_phil)
 	{
-		ft_write(&philo[i], SATISFIED, RED, 1);
+		ft_write(&philo[0], SATISFIED, BLACK, 1);
 		return (DEAD);
 	}
 	return (ALIVE);
@@ -59,6 +58,7 @@ void	*monitoring(void *data)
 	table = (t_table *)data;
 	pthread_mutex_lock(&table->start_lock);
 	pthread_mutex_unlock(&table->start_lock);
+	ft_usleep(1000);
 	i = 0;
 	while (check_status(table->philo) == ALIVE)
 	{

@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:57 by beroy             #+#    #+#             */
-/*   Updated: 2024/03/21 21:02:28 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/10 13:55:30 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@ int join_n_free(t_table *table, pthread_t monitor, unsigned int i)
 {
 	pthread_join(monitor, NULL);
 	while (i-- > 0)
+	{
 		pthread_join(table->philo[i].thread, NULL);
+		pthread_mutex_destroy(&table->forks[i]);
+	}
+	pthread_mutex_destroy(&table->start_lock);
+	pthread_mutex_destroy(&table->write_lock);
+	pthread_mutex_destroy(&table->meal_lock);
 	free(table->forks);
 	free(table->philo);
 	free(table);

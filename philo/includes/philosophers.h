@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/09 14:20:32 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/10 14:23:06 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 // COLOR CODES
 
+# define BLACK "\033[0;30m"
 # define RED "\033[0;31m"
 # define GREEN "\033[0;32m"
 # define YELLOW "\033[0;33m"
@@ -34,12 +35,12 @@
 
 // DISPLAY
 
-# define LFORK "has taken the left fork."
-# define RFORK "has taken the right fork."
-# define EAT "is eating.."
-# define SLEEP "is sleeping..."
-# define THINK "is thinking."
-# define DIED "died from a lack of spaghetti... :("
+# define LFORK "has taken a fork"
+# define RFORK "has taken a fork"
+# define EAT "is eating"
+# define SLEEP "is sleeping"
+# define THINK "is thinking"
+# define DIED "died"
 # define SATISFIED "and all of his friend are satisfied!"
 
 typedef struct s_philo
@@ -55,6 +56,7 @@ typedef struct s_philo
 	int 			satisfied;
 	unsigned int 	alive;
 	long int		last_meal;
+	long int		initial_time;
 	unsigned int	*status;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;

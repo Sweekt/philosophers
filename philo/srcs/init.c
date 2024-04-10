@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/09 14:14:07 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/10 11:31:48 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ pthread_mutex_t 	*fork_init(int nbr_phil)
 	pthread_mutex_t *forks;
 	int 			i;
 
-	i = -1;
+	i = 0;
 	forks = malloc(sizeof(pthread_mutex_t) * nbr_phil);
 	if (forks == NULL)
 		return (NULL);
@@ -80,6 +80,7 @@ void	content_init(t_philo *philo, int ac, char **av, int i)
 	philo->alive = ALIVE;
 	philo->last_meal = time_now();
 	philo->satisfied = 0;
+	philo->initial_time = time_now();
 }
 
 t_table	*init(int ac, char **av)
