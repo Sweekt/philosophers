@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:40:46 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/10 11:47:30 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/10 15:58:33 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	eat(t_philo *philo)
 	ft_write(philo, LFORK, CYAN, 0);
 	ft_write(philo, EAT, GREEN, 0);
 	ft_usleep(philo->tte * 1000);
-	pthread_mutex_lock(philo->meal_lock);
+	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = time_now();
 	philo->meals_eaten++;
-	pthread_mutex_unlock(philo->meal_lock);
+	pthread_mutex_unlock(&philo->meal_lock);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
 }
@@ -35,15 +35,26 @@ void	sleep_think(t_philo *philo)
 	ft_write(philo, THINK, YELLOW, 0);
 	ft_usleep(500);
 }
+int ft_status(t_philo *philo)
+{
+	int state;
 
+	pthread_mutex_lock(philo->dead_lock);
+	if (*philo->status == DEAD)
+		state = DEAD;
+	else
+		state = ALIVE;
+	pthread_mutex_unlock(philo->dead_lock);
+	return (state);
+}
 void	*routine(void *data)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
-	pthread_mutex_lock(philo->meal_lock);
+	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = time_now();
-	pthread_mutex_unlock(philo->meal_lock);
+	pthread_mutex_unlock(&philo->meal_lock);
 	pthread_mutex_lock(philo->start_lock);
 	pthread_mutex_unlock(philo->start_lock);
 	if ((philo->id - 1) % 2 == 1)
@@ -51,7 +62,7 @@ void	*routine(void *data)
 		ft_write(philo, THINK, PURPLE, 0);
 		ft_usleep(1000);
 	}
-	while (*philo->status == ALIVE)
+	while (ft_status(philo) == ALIVE)
 	{
 		eat(philo);
 		sleep_think(philo);

@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/10 14:23:06 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/10 15:00:57 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*write_lock;
 	pthread_mutex_t	*start_lock;
-	pthread_mutex_t *meal_lock;
+	pthread_mutex_t	*dead_lock;
+	pthread_mutex_t meal_lock;
 }	t_philo;
 
 typedef struct s_table
@@ -70,7 +71,7 @@ typedef struct s_table
 	pthread_mutex_t *forks;
 	pthread_mutex_t write_lock;
 	pthread_mutex_t start_lock;
-	pthread_mutex_t meal_lock;
+	pthread_mutex_t	dead_lock;
 	unsigned int	status;
 	t_philo	*philo;
 }	t_table;
@@ -85,12 +86,13 @@ int				ft_check_args(char **av);
 
 void			eat(t_philo *philo);
 void			sleep_think(t_philo *philo);
+int 			ft_status(t_philo *philo);
 void			*routine(void *data);
 
 // init
 
 pthread_mutex_t	*fork_init(int nbr_phil);
-void			mutex_destroyer(t_table *table, int state);
+void			mutex_destroyer(t_table *table, int state, int i);
 t_table			*table_init(t_philo *philo, int nbr_phil);
 void			content_init(t_philo *philo, int ac, char **av, int i);
 t_table			*init(int ac, char **av);
