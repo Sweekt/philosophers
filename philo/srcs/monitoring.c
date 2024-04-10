@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/09 14:46:41 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/10 11:15:18 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int check_status(t_philo *philo)
 			satisfied++;
 		i++;
 	}
+	//printf("nbr of satisfied: %d\n", satisfied);
 	if (satisfied == philo[0].nbr_phil)
 	{
 		ft_write(&philo[i], SATISFIED, RED, 1);
