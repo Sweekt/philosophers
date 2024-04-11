@@ -88,6 +88,7 @@ void			eat(t_philo *philo);
 void			sleep_think(t_philo *philo);
 int				ft_status(t_philo *philo);
 void			*routine(void *data);
+void			*routine_solo(void *data);
 
 // init
 

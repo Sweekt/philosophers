@@ -71,3 +71,21 @@ void	*routine(void *data)
 	}
 	return (NULL);
 }
+
+void	*routine_solo(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	pthread_mutex_lock(&philo->meal_lock);
+	philo->last_meal = time_now();
+	pthread_mutex_unlock(&philo->meal_lock);
+	pthread_mutex_lock(philo->start_lock);
+	pthread_mutex_unlock(philo->start_lock);
+	pthread_mutex_lock(philo->r_fork);
+	ft_write(philo, RFORK, BLUE, 0);
+	while (ft_status(philo) == ALIVE)
+		ft_usleep(1000);
+	pthread_mutex_unlock(philo->r_fork);
+	return (NULL);
+}

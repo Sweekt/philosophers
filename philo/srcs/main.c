@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:58:57 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/10 17:06:24 by beroy            ###   ########.fr       */
+/*   Updated: 2024/04/11 13:54:18 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ int	main(int ac, char **av)
 	unsigned int	i;
 	pthread_t		monitor;
 
-	if (ac < 5 || ac > 6)
+	if (ac < 5 || ac > 6 || ft_check_args(av) == 1)
 		return (printf("Wrong arguments input!\n"), 0);
-	if (ft_check_args(av) == 1)
-		return (0);
 	table = init(av);
 	if (table == NULL)
 		return (printf("Malloc or mutex failed!\n"), 0);
@@ -48,8 +46,12 @@ int	main(int ac, char **av)
 	pthread_mutex_lock(&table->start_lock);
 	while (i < table->philo[0].nbr_phil)
 	{
-		pthread_create(&table->philo[i].thread,
-			NULL, routine, &table->philo[i]);
+		if (table->philo[0].nbr_phil == 1)
+			pthread_create(&table->philo[i].thread,
+				NULL, routine_solo, &table->philo[i]);
+		else
+			pthread_create(&table->philo[i].thread,
+				NULL, routine, &table->philo[i]);
 		i++;
 	}
 	pthread_create(&monitor, NULL, monitoring, table);
