@@ -7,7 +7,8 @@ SRCS		:=	main.c			\
 				time.c			\
 				init.c			\
 				routine.c		\
-				monitoring.c
+				monitoring.c	\
+				mtx_func.c
 
 SRCS_D		:=	srcs/
 
@@ -19,7 +20,7 @@ HEAD		:=	includes/philosophers.h
 
 HEAD_D		:=	.
 
-CFLAGS		:=	-Wall -Wextra -Werror -pthread -g3
+CFLAGS		:=	-Wall -Wextra -Werror -pthread
 
 NAME		:=	philosophers
 

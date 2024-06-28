@@ -109,4 +109,10 @@ void			ft_write(t_philo *philo, char *str, char *color, int stop);
 int				check_status(t_philo *philo);
 void			*monitoring(void *data);
 
+// mtx_func.c
+
+long int		chk_meal(t_philo *philo);
+int				chk_nb_meal(t_philo *philo);
+void			set_status(t_philo *philo, int status);
+
 #endif

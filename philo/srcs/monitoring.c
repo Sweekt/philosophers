@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/06/28 14:14:51 by beroy            ###   ########.fr       */
+/*   Updated: 2024/06/28 18:10:03 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_status(t_philo *philo)
 	satisfied = 0;
 	while (i < philo[0].nbr_phil)
 	{
-		if (philo[i].alive == DEAD)
+		if (ft_status(&philo[i]) == DEAD)
 		{
 			ft_write(&philo[i], DIED, RED, 1);
 			return (DEAD);
@@ -61,16 +61,15 @@ void	*monitoring(void *data)
 	table = (t_table *)data;
 	pthread_mutex_lock(&table->start_lock);
 	pthread_mutex_unlock(&table->start_lock);
+	ft_usleep(table->philo[0].tte * 2000);
 	i = 0;
 	while (check_status(table->philo) == ALIVE)
 	{
-		pthread_mutex_lock(&table->philo[i].meal_lock);
-		if (time_now() - table->philo[i].last_meal >= table->philo[i].ttd)
-			table->philo[i].alive = DEAD;
+		if (time_now() - chk_meal(&table->philo[i]) >= table->philo[i].ttd)
+			set_status(&table->philo[i], DEAD);
 		if (table->philo[i].nbr_eat != -1
-			&& table->philo[i].meals_eaten >= table->philo[i].nbr_eat)
+			&& chk_nb_meal(&table->philo[i]) >= table->philo[i].nbr_eat)
 			table->philo[i].satisfied = 1;
-		pthread_mutex_unlock(&table->philo[i].meal_lock);
 		ft_usleep(500);
 		i++;
 		if (i == table->philo[0].nbr_phil)
