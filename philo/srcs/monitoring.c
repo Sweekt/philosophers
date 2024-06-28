@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beroy <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/11 13:26:26 by beroy            ###   ########.fr       */
+/*   Updated: 2024/06/28 14:14:51 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	*monitoring(void *data)
 	table = (t_table *)data;
 	pthread_mutex_lock(&table->start_lock);
 	pthread_mutex_unlock(&table->start_lock);
-	ft_usleep(table->philo[0].ttd * 1000);
 	i = 0;
 	while (check_status(table->philo) == ALIVE)
 	{

@@ -19,7 +19,7 @@ HEAD		:=	includes/philosophers.h
 
 HEAD_D		:=	.
 
-CFLAGS		:=	-Wall -Wextra -Werror -g3 -pthread
+CFLAGS		:=	-Wall -Wextra -Werror -pthread -g3
 
 NAME		:=	philosophers
 
