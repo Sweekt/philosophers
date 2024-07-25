@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:40:46 by beroy             #+#    #+#             */
-/*   Updated: 2024/07/25 14:25:22 by beroy            ###   ########.fr       */
+/*   Updated: 2024/07/25 17:18:44 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,22 @@
 void	eat(t_philo *philo)
 {
 	while (take_fork(philo) == AVAILABLE)
-		ft_usleep(1000);
-	ft_write(philo, RFORK, BLUE, 0);
-	ft_write(philo, LFORK, CYAN, 0);
+		ft_usleep(1000, philo);
 	ft_write(philo, EAT, GREEN, 0);
-	ft_usleep(philo->tte * 1000);
 	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = time_now();
+	ft_usleep(philo->tte * 1000, philo);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_lock);
-	while (give_fork(philo) == TAKEN)
-		ft_usleep(1000);
+	give_fork(philo);
 }
 
 void	sleep_think(t_philo *philo)
 {
 	ft_write(philo, SLEEP, PURPLE, 0);
-	ft_usleep(philo->tts * 1000);
+	ft_usleep(philo->tts * 1000, philo);
 	ft_write(philo, THINK, YELLOW, 0);
-	ft_usleep(500);
+	ft_usleep(500, philo);
 }
 
 int	ft_status(t_philo *philo)
@@ -62,7 +59,7 @@ void	*routine(void *data)
 	if ((philo->id - 1) % 2 == 1)
 	{
 		ft_write(philo, THINK, PURPLE, 0);
-		ft_usleep(1000);
+		ft_usleep(1000, philo);
 	}
 	while (ft_status(philo) == ALIVE)
 	{
@@ -85,7 +82,7 @@ void	*routine_solo(void *data)
 	pthread_mutex_lock(&philo->r_fork->fork);
 	ft_write(philo, RFORK, BLUE, 0);
 	while (ft_status(philo) == ALIVE)
-		ft_usleep(1000);
+		ft_usleep(1000, philo);
 	pthread_mutex_unlock(&philo->r_fork->fork);
 	return (NULL);
 }

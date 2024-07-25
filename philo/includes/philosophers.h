@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/07/25 14:32:15 by beroy            ###   ########.fr       */
+/*   Updated: 2024/07/25 17:18:22 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 typedef struct s_forks
 {
 	int				f_state;
-	pthread_mutex_t fork;
+	pthread_mutex_t	fork;
 }	t_forks;
 
 typedef struct s_philo
@@ -109,7 +109,7 @@ t_table			*init(char **av);
 // time
 
 long int		time_now(void);
-void			ft_usleep(long int time);
+void			ft_usleep(long int time, t_philo *philo);
 
 // monitoring
 
@@ -123,7 +123,7 @@ void			*monitoring(void *data);
 long int		chk_meal(t_philo *philo);
 int				chk_nb_meal(t_philo *philo);
 void			set_death(t_philo *philo, int status);
-int 			take_fork(t_philo *philo);
-int 			give_fork(t_philo *philo);
+int				take_fork(t_philo *philo);
+void			give_fork(t_philo *philo);
 
 #endif

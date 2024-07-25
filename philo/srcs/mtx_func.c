@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:04 by beroy             #+#    #+#             */
-/*   Updated: 2024/07/22 19:05:42 by beroy            ###   ########.fr       */
+/*   Updated: 2024/07/25 16:49:56 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,38 +39,35 @@ void	set_death(t_philo *philo, int status)
 	pthread_mutex_unlock(philo->dead_lock);
 }
 
-int take_fork(t_philo *philo)
+int	take_fork(t_philo *philo)
 {
 	int	state;
 
 	state = AVAILABLE;
 	pthread_mutex_lock(&philo->l_fork->fork);
-	pthread_mutex_lock(&philo->r_fork->fork);
-	if (philo->l_fork->f_state == AVAILABLE && philo->r_fork->f_state == AVAILABLE)
+	if (philo->l_fork->f_state == AVAILABLE)
 	{
 		philo->l_fork->f_state = TAKEN;
+		ft_write(philo, LFORK, CYAN, 0);
+	}
+	pthread_mutex_unlock(&philo->l_fork->fork);
+	pthread_mutex_lock(&philo->r_fork->fork);
+	if (philo->r_fork->f_state == AVAILABLE)
+	{
+		ft_write(philo, RFORK, BLUE, 0);
 		philo->r_fork->f_state = TAKEN;
 		state = TAKEN;
 	}
 	pthread_mutex_unlock(&philo->r_fork->fork);
-	pthread_mutex_unlock(&philo->l_fork->fork);
 	return (state);
 }
 
-int give_fork(t_philo *philo)
+void	give_fork(t_philo *philo)
 {
-	int	state;
-
-	state = TAKEN;
 	pthread_mutex_lock(&philo->l_fork->fork);
-	pthread_mutex_lock(&philo->r_fork->fork);
-	if (philo->l_fork->f_state == TAKEN && philo->r_fork->f_state == TAKEN)
-	{
-		philo->l_fork->f_state = AVAILABLE;
-		philo->r_fork->f_state = AVAILABLE;
-		state = AVAILABLE;
-	}
-	pthread_mutex_unlock(&philo->r_fork->fork);
+	philo->l_fork->f_state = AVAILABLE;
 	pthread_mutex_unlock(&philo->l_fork->fork);
-	return (state);
+	pthread_mutex_lock(&philo->r_fork->fork);
+	philo->r_fork->f_state = AVAILABLE;
+	pthread_mutex_unlock(&philo->r_fork->fork);
 }
