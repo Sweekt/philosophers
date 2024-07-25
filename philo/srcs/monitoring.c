@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/07/25 14:20:53 by beroy            ###   ########.fr       */
+/*   Updated: 2024/07/25 16:03:00 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,23 @@ int	check_death(t_philo *philo)
 	return (state);
 }
 
+void	set_status(t_philo *philo, int status)
+{
+	pthread_mutex_lock(philo->dead_lock);
+	*philo->status = status;
+	pthread_mutex_unlock(philo->dead_lock);
+}
+
 void	ft_write(t_philo *philo, char *str, char *color, int stop)
 {
 	pthread_mutex_lock(philo->write_lock);
-	pthread_mutex_lock(philo->dead_lock);
-	if (*philo->status == ALIVE)
+	if (ft_status(philo) == ALIVE)
 	{
 		printf("%li%s %d %s\033[0m\n", time_now() - philo->initial_time, color,
 			philo->id, str);
 		if (stop == 1)
-			*philo->status = 0;
+			set_status(philo, DEAD);
 	}
-	pthread_mutex_unlock(philo->dead_lock);
 	pthread_mutex_unlock(philo->write_lock);
 }
 
@@ -79,7 +84,7 @@ void	*monitoring(void *data)
 	while (check_status(table->philo) == ALIVE)
 	{
 		if (time_now() - chk_meal(&table->philo[i]) >= table->philo[i].ttd)
-			set_status(&table->philo[i], DEAD);
+			set_death(&table->philo[i], DEAD);
 		if (table->philo[i].nbr_eat != -1
 			&& chk_nb_meal(&table->philo[i]) >= table->philo[i].nbr_eat)
 			table->philo[i].satisfied = 1;

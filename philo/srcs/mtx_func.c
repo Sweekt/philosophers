@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:04 by beroy             #+#    #+#             */
-/*   Updated: 2024/07/22 16:38:43 by beroy            ###   ########.fr       */
+/*   Updated: 2024/07/22 19:05:42 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	chk_nb_meal(t_philo *philo)
 	return (meals);
 }
 
-void	set_status(t_philo *philo, int status)
+void	set_death(t_philo *philo, int status)
 {
 	pthread_mutex_lock(philo->dead_lock);
 	philo->alive = status;

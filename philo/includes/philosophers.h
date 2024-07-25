@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/07/22 19:05:42 by beroy            ###   ########.fr       */
+/*   Updated: 2024/07/25 14:32:15 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void			*monitoring(void *data);
 
 long int		chk_meal(t_philo *philo);
 int				chk_nb_meal(t_philo *philo);
-void			set_status(t_philo *philo, int status);
+void			set_death(t_philo *philo, int status);
 int 			take_fork(t_philo *philo);
 int 			give_fork(t_philo *philo);
 
