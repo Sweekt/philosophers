@@ -6,29 +6,30 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:17:13 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/10 17:06:39 by beroy            ###   ########.fr       */
+/*   Updated: 2024/07/22 16:39:43 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-pthread_mutex_t	*fork_init(int nbr_phil)
+t_forks	*fork_init(int nbr_phil)
 {
-	pthread_mutex_t	*forks;
-	int				i;
+	t_forks	*forks;
+	int		i;
 
 	i = 0;
-	forks = malloc(sizeof(pthread_mutex_t) * nbr_phil);
+	forks = malloc(sizeof(t_forks) * nbr_phil);
 	if (forks == NULL)
 		return (NULL);
 	while (i < nbr_phil)
 	{
-		if (pthread_mutex_init(&forks[i], NULL))
+		if (pthread_mutex_init(&forks[i].fork, NULL))
 		{
 			while (i-- > 0)
-				pthread_mutex_destroy(&forks[i]);
+				pthread_mutex_destroy(&forks[i].fork);
 			return (free(forks), NULL);
 		}
+		forks[i].f_state = AVAILABLE;
 		i++;
 	}
 	return (forks);

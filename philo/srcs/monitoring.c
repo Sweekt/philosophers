@@ -6,11 +6,24 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:35:59 by beroy             #+#    #+#             */
-/*   Updated: 2024/06/28 18:10:03 by beroy            ###   ########.fr       */
+/*   Updated: 2024/07/25 14:20:53 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
+int	check_death(t_philo *philo)
+{
+	int	state;
+
+	pthread_mutex_lock(philo->dead_lock);
+	if (philo->alive == DEAD)
+		state = DEAD;
+	else
+		state = ALIVE;
+	pthread_mutex_unlock(philo->dead_lock);
+	return (state);
+}
 
 void	ft_write(t_philo *philo, char *str, char *color, int stop)
 {
@@ -36,7 +49,7 @@ int	check_status(t_philo *philo)
 	satisfied = 0;
 	while (i < philo[0].nbr_phil)
 	{
-		if (ft_status(&philo[i]) == DEAD)
+		if (check_death(&philo[i]) == DEAD)
 		{
 			ft_write(&philo[i], DIED, RED, 1);
 			return (DEAD);

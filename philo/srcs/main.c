@@ -19,7 +19,7 @@ int	join_n_free(t_table *table, pthread_t monitor, unsigned int i)
 		pthread_join(table->philo[i].thread, NULL);
 	while (i < table->philo[0].nbr_phil)
 	{
-		pthread_mutex_destroy(&table->forks[i]);
+		pthread_mutex_destroy(&table->forks[i].fork);
 		pthread_mutex_destroy(&table->philo[i].meal_lock);
 		i++;
 	}

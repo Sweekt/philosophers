@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:10:04 by beroy             #+#    #+#             */
-/*   Updated: 2024/06/28 18:10:04 by beroy            ###   ########.fr       */
+/*   Updated: 2024/07/22 16:38:43 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,40 @@ void	set_status(t_philo *philo, int status)
 	pthread_mutex_lock(philo->dead_lock);
 	philo->alive = status;
 	pthread_mutex_unlock(philo->dead_lock);
+}
+
+int take_fork(t_philo *philo)
+{
+	int	state;
+
+	state = AVAILABLE;
+	pthread_mutex_lock(&philo->l_fork->fork);
+	pthread_mutex_lock(&philo->r_fork->fork);
+	if (philo->l_fork->f_state == AVAILABLE && philo->r_fork->f_state == AVAILABLE)
+	{
+		philo->l_fork->f_state = TAKEN;
+		philo->r_fork->f_state = TAKEN;
+		state = TAKEN;
+	}
+	pthread_mutex_unlock(&philo->r_fork->fork);
+	pthread_mutex_unlock(&philo->l_fork->fork);
+	return (state);
+}
+
+int give_fork(t_philo *philo)
+{
+	int	state;
+
+	state = TAKEN;
+	pthread_mutex_lock(&philo->l_fork->fork);
+	pthread_mutex_lock(&philo->r_fork->fork);
+	if (philo->l_fork->f_state == TAKEN && philo->r_fork->f_state == TAKEN)
+	{
+		philo->l_fork->f_state = AVAILABLE;
+		philo->r_fork->f_state = AVAILABLE;
+		state = AVAILABLE;
+	}
+	pthread_mutex_unlock(&philo->r_fork->fork);
+	pthread_mutex_unlock(&philo->l_fork->fork);
+	return (state);
 }

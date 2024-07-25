@@ -6,7 +6,7 @@
 /*   By: beroy <beroy@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:59:03 by beroy             #+#    #+#             */
-/*   Updated: 2024/04/10 17:06:24 by beroy            ###   ########.fr       */
+/*   Updated: 2024/07/22 19:05:42 by beroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define PHILO_MAX 200
 # define ALIVE 1
 # define DEAD 0
+# define TAKEN 0
+# define AVAILABLE 1
 
 // COLOR CODES
 
@@ -43,6 +45,12 @@
 # define DIED "died"
 # define SATISFIED "and all of his friend are satisfied!"
 
+typedef struct s_forks
+{
+	int				f_state;
+	pthread_mutex_t fork;
+}	t_forks;
+
 typedef struct s_philo
 {
 	pthread_t		thread;
@@ -58,8 +66,8 @@ typedef struct s_philo
 	long int		last_meal;
 	long int		initial_time;
 	unsigned int	*status;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
+	t_forks			*r_fork;
+	t_forks			*l_fork;
 	pthread_mutex_t	*write_lock;
 	pthread_mutex_t	*start_lock;
 	pthread_mutex_t	*dead_lock;
@@ -68,7 +76,7 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	pthread_mutex_t	*forks;
+	t_forks			*forks;
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	start_lock;
 	pthread_mutex_t	dead_lock;
@@ -92,7 +100,7 @@ void			*routine_solo(void *data);
 
 // init
 
-pthread_mutex_t	*fork_init(int nbr_phil);
+t_forks			*fork_init(int nbr_phil);
 void			mutex_destroyer(t_table *table, int state, int i);
 t_table			*table_init(t_philo *philo, int nbr_phil);
 void			content_init(t_philo *philo, t_table *table, char **av, int i);
@@ -105,6 +113,7 @@ void			ft_usleep(long int time);
 
 // monitoring
 
+int				check_death(t_philo *philo);
 void			ft_write(t_philo *philo, char *str, char *color, int stop);
 int				check_status(t_philo *philo);
 void			*monitoring(void *data);
@@ -114,5 +123,7 @@ void			*monitoring(void *data);
 long int		chk_meal(t_philo *philo);
 int				chk_nb_meal(t_philo *philo);
 void			set_status(t_philo *philo, int status);
+int 			take_fork(t_philo *philo);
+int 			give_fork(t_philo *philo);
 
 #endif
